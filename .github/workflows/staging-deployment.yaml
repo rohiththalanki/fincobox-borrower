@@ -12,10 +12,10 @@ jobs:
     environment: ${{ inputs.ENV }}  
 
   steps:
-    -name: Checkout
-    uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
   
-    -name: Set Nodejs 20
+    - name: Set Nodejs 20
       uses: actions/setup-node@v4
       with:
         node-version: 20
@@ -30,12 +30,12 @@ jobs:
       run: yarn build
 
     - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-      - name: Deploy static site to S3 bucket
-        run: |
-          aws s3 sync ./dist/standalone/ s3://${{ secrets.AWS_STORAGE_BUCKET_NAME }} --delete
+    - name: Deploy static site to S3 bucket
+      run: |
+        aws s3 sync ./dist/standalone/ s3://${{ secrets.AWS_STORAGE_BUCKET_NAME }} --delete
