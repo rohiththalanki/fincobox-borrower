@@ -7,9 +7,9 @@ on:
 
 jobs:
   deploy:
-    name: Build and upload to S3
-    run-on: ubuntu-latest
-    environment: ${{ inputs.ENV }}  
+    - name: Build and upload to S3
+      run-on: ubuntu-latest
+      environment: ${{ inputs.ENV }}  
 
   steps:
     - name: Checkout
