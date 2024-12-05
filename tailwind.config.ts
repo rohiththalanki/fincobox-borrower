@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 
-console.log('envs', process.env.NEXT_PUBLIC_API_BASE_URL);
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",

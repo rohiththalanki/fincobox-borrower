@@ -39,7 +39,6 @@ module.exports = {
     "prefer-object-spread": "warn",
     "prefer-template": "warn",
     "spaced-comment": ["warn", "always", { markers: ["/"] }],
-    yoda: "warn",
     "import/order": [
       "warn",
       {
@@ -87,31 +86,5 @@ module.exports = {
         },
       },
     ],
-    "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
-    "@typescript-eslint/ban-ts-comment": [
-      "warn",
-      {
-        "ts-expect-error": "allow-with-description",
-      },
-    ],
-    "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/consistent-indexed-object-style": ["warn", "record"],
-    "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
-    "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/no-explicit-any": "warn",
   },
-  parser: "@typescript-eslint/parser",
-  ignorePatterns: [
-    "src/@@generated/**/*.tsx",
-    "src/@@generated/**/*.ts",
-    "**.js",
-  ],
-  overrides: [
-    {
-      files: ["scripts/**/*"],
-      rules: {
-        "@typescript-eslint/no-var-requires": "off",
-      },
-    },
-  ],
 }

@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button'
 import { Card, Text, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import { SignupParams, useSignupMutation } from '@/services/authentication';
-import { useToast } from '@/components/ui/use-toast';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PHONE_REGEX } from '@/utils/regex';
@@ -39,18 +38,18 @@ export const SignupSchema = z.object({
 
 export function Signup() {
   const { mutate: signUpuser, isLoading, isError } = useSignupMutation({});
-  const { toast } = useToast();
+
   const [otpScreen, setOtpScreen] = useState<boolean>(true);
 
   const form = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
-      business_type: undefined,
-      first_name: undefined,
-      last_name: undefined,
-      phone_number: undefined,
-      email: undefined,
-      password: undefined,
+      business_type: '',
+      first_name: '',
+      last_name: '',
+      phone_number: '',
+      email: '',
+      password: '',
       accept_terms: false,
       whatsapp_optin: false,
       country_code: 'ae'
@@ -66,10 +65,6 @@ export function Signup() {
           console.log('successsss');
         },
         onError: (error: string) => {
-          toast({
-            title: 'Signup Error',
-            description: <div className="flex flex-col gap-1">{error}</div>,
-          });
         }
       }
     );

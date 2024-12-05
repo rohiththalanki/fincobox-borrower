@@ -1,5 +1,5 @@
 // utils/cookies.ts
-import cookie from 'cookie';
+import * as cookie from 'cookie';
 
 export const getAuthToken = () => {
   if (typeof window !== "undefined") {

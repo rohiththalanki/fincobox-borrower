@@ -13,7 +13,6 @@ import { Card, Text } from '@radix-ui/themes';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForgotPasswordMutation } from '@/services/authentication/forgot-password';
-import { useToast } from '@/components/ui/use-toast';
 import { z } from 'zod';
 
 export const ForgotPasswordSchema = z.object({
@@ -22,7 +21,6 @@ export const ForgotPasswordSchema = z.object({
 
 export function ForgotPassword() {
   const { mutate: forgotPasswordAction, isLoading, isError } = useForgotPasswordMutation({});
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -40,11 +38,7 @@ export function ForgotPassword() {
           console.log('successsss', response);
         },
         onError: (error: string) => {
-          toast({
-            variant: 'destructive',
-            title: 'Error!',
-            description: error,
-          });
+
         }
       }
     );

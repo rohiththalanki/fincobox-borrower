@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button'
 import { Card, Text, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import { SignupParams, useSignupMutation } from '@/services/authentication';
-import { useToast } from '@/components/ui/use-toast';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OTP_REGEX } from '@/utils/regex';
@@ -27,12 +26,11 @@ export const SignupSchema = z.object({
 
 export default function SignupConfirmOtp({ phone_number }: { phone_number: string }) {
   const { mutate: signUpuser, isLoading, isError } = useSignupMutation({});
-  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
-      otp: undefined,
+      otp: '',
     },
   });
 
@@ -45,10 +43,7 @@ export default function SignupConfirmOtp({ phone_number }: { phone_number: strin
     //       console.log('successsss');
     //     },
     //     onError: (error: string) => {
-    //       toast({
-    //         title: 'Signup Error',
-    //         description: <div className="flex flex-col gap-1">{error}</div>,
-    //       });
+
     //     }
     //   }
     // );

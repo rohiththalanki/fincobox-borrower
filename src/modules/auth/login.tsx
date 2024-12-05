@@ -12,7 +12,6 @@ import {
 import { Card, Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link'
 import { useSigninMutation } from '@/services/authentication';
-import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button'
 import { z } from 'zod';
@@ -24,7 +23,7 @@ export const LoginSchema = z.object({
 
 export function Login() {
   const { mutate: signInuser, isLoading, isError } = useSigninMutation({});
-  const { toast } = useToast();
+
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -45,11 +44,6 @@ export function Login() {
           console.log(token);
         },
         onError: (error: string) => {
-          toast({
-            variant: 'destructive',
-            title: 'Error!',
-            description: error,
-          });
         }
       }
     );

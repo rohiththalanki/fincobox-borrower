@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
 import axios from "axios";
-import { API_BASE_URL } from '@/utils';
+import { API_BASE_URL } from '@/utils/env';
 
 export interface SignupParams {
   business_type: string;

@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { API_BASE_URL } from '@/utils';
+import { API_BASE_URL } from '@/utils/env';
 
 export interface SigninParams {
   email: string;

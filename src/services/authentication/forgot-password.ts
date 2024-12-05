@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useMutation } from 'react-query';
-import { API_BASE_URL } from '@/utils';
+import { API_BASE_URL } from '@/utils/env';
 
 export interface ForgotPasswordParams {
   email: string;
