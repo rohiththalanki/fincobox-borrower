@@ -4,7 +4,7 @@ import { performRequest, apiEndPoints, methodType } from "./_apiConfig";
 export const createLoanRequest = (data = {}) => {
   return performRequest(
     methodType.POST,
-    config.baseURL + apiEndPoints.createLoan,
+    config.API_BASE_URL + apiEndPoints.createLoan,
     data,
     true,
     true
@@ -20,7 +20,7 @@ export const createLoanRequest = (data = {}) => {
 export const getLoanRequest = (data = {}) => {
   return performRequest(
     methodType.GET,
-    config.baseURL + apiEndPoints.createLoan,
+    config.API_BASE_URL + apiEndPoints.createLoan,
     data,
     true
   )
@@ -51,7 +51,7 @@ export const updateLoanRequest = async (data = {}, id) => {
 export const createInvoiceRequest = (data = {}) => {
   return performRequest(
     methodType.POST,
-    config.baseURL + apiEndPoints.invoiceLoan,
+    config.API_BASE_URL + apiEndPoints.invoiceLoan,
     data,
     true,
     true
@@ -67,7 +67,7 @@ export const createInvoiceRequest = (data = {}) => {
 export const deleteInvoiceRequest = (id) => {
   return performRequest(
     methodType.DELETE,
-    config.baseURL + apiEndPoints.invoiceLoan + "/" + id,
+    config.API_BASE_URL + apiEndPoints.invoiceLoan + "/" + id,
     // data,
     // true
   )

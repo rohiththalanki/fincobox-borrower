@@ -3,8 +3,8 @@ import { performRequest, apiEndPoints, methodType } from "./_apiConfig";
 
 export const personalKycRequest = (data = {}, id = false) => {
   const url = id
-    ? config.baseURL + apiEndPoints.kycPersonal + "/" + id
-    : config.baseURL + apiEndPoints.kycPersonal;
+    ? config.API_BASE_URL + apiEndPoints.kycPersonal + "/" + id
+    : config.API_BASE_URL + apiEndPoints.kycPersonal;
   return performRequest(
     methodType[id ? "PATCH" : "POST"],
     url,
@@ -22,8 +22,8 @@ export const personalKycRequest = (data = {}, id = false) => {
 
 export const businessKycRequest = async (data = {}, id = false) => {
   const url = id
-    ? config.baseURL + apiEndPoints.kycBusiness + "/" + id
-    : config.baseURL + apiEndPoints.kycBusiness;
+    ? config.API_BASE_URL + apiEndPoints.kycBusiness + "/" + id
+    : config.API_BASE_URL + apiEndPoints.kycBusiness;
   return performRequest(
     methodType[id ? "PATCH" : "POST"],
     url,

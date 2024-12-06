@@ -1,10 +1,10 @@
-import config, { config2 } from "./_apiConfig/apiConfig";
+import config from "./_apiConfig/apiConfig";
 import { performRequest, apiEndPoints, methodType } from "./_apiConfig";
 
-console.log('copnfig', config2)
+console.log('copnfig', config);
 export const loginRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.authLogin), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.authLogin), data, false
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -14,7 +14,7 @@ export const loginRequest = (data = {}) => {
 
 export const signupRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.authSignup), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.authSignup), data, false
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -24,7 +24,7 @@ export const signupRequest = (data = {}) => {
 
 export const otpVerificationRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.authVerifyMail), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.authVerifyMail), data, false
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -34,7 +34,7 @@ export const otpVerificationRequest = (data = {}) => {
 
 export const changePasswordRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.authChangePassword), data, true
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.authChangePassword), data, true
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -44,7 +44,7 @@ export const changePasswordRequest = (data = {}) => {
 
 export const resetPasswordRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.resetPassword), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.resetPassword), data, false
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -54,7 +54,7 @@ export const resetPasswordRequest = (data = {}) => {
 
 export const resendEmailOtpRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.resendEmailOtp), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.resendEmailOtp), data, false
     ).then((response) => {
         return response
     }).catch((error) => {
@@ -64,7 +64,7 @@ export const resendEmailOtpRequest = (data = {}) => {
 
 export const verifyPasswordResetRequest = (data = {}) => {
     return performRequest(
-        methodType.POST, (config.baseURL + apiEndPoints.verifyPasswordReset), data, false
+        methodType.POST, (config.API_BASE_URL + apiEndPoints.verifyPasswordReset), data, false
     ).then((response) => {
         return response
     }).catch((error) => {

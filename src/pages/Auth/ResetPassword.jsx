@@ -194,7 +194,7 @@ export function ResetPassword() {
             </span>
           </button>
         </div>
-        <p className="mt-3">
+        <p className="mt-3 text-center">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </form>

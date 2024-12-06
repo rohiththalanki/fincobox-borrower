@@ -325,7 +325,7 @@ export function Signup() {
             </span>
           </button>
         </div>
-        <p className="mt-3 mx-5 ">
+        <p className="mt-3 text-center">
           Already have an account? <Link to="/login">Sign In</Link>
         </p>
       </form>

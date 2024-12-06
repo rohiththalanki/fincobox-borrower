@@ -37,7 +37,7 @@ export function Login() {
         navigate("/home");
       } else {
         setIsLoading(false);
-        setResError(res?.error.message);
+        setResError(res?.error?.message || 'Something went wrong!');
       }
     } else {
       setInputError(validationResult);
@@ -130,7 +130,7 @@ export function Login() {
             </span>
           </button>
         </div>
-        <p className="mt-3 mx-5 ">
+        <p className="mt-3 text-center">
           Don't have an account? <Link to="/signup">Sign up now</Link>
         </p>
       </form>

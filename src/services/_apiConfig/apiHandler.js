@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getStorage, clearStorage } from "../../utils/storage";
-import { AppConfig } from "./apiConfig";
+import { APP_CONFIG } from "./apiConfig";
 import { methodType } from "./apiEndPoints";
 
 axios.interceptors.response.use(
@@ -36,7 +36,7 @@ export const performRequest = async (
   const config = {
     method,
     url,
-    baseURL: AppConfig.baseURL,
+    baseURL: APP_CONFIG.API_BASE_URL,
   };
 
   if (
