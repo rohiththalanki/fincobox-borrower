@@ -1,0 +1,440 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh !important;
+  /* width: 100vw !important; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* ///////// validation ////////// */
+
+.invalid-feedback {
+  display: unset !important;
+  color: #dc3545 !important;
+}
+
+/* ///////// validation ////////// */
+a {
+  text-decoration: none;
+}
+
+/* ////////// header //////////// */
+nav {
+  background-color: #77f2ff8f !important;
+}
+
+.nav-link {
+  color: #101010 !important;
+}
+
+button.bg-none.btn.btn-secondary {
+  background: transparent !important;
+  border: 0;
+}
+
+.layout-container {
+  min-height: calc(100vh - 150px) !important;
+  min-width: 97vw !important;
+  /* margin: 10px 20px; */
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: transparent;
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.toast_container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+.PhoneInputInput {
+  border: 0;
+}
+
+.profile_avatar {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  border-radius: 5px !important;
+  height: 2.2rem;
+  width: 2.2rem;
+  color: white;
+  background: linear-gradient(190deg, #3bf1ae -15.8%, #1b6be5 69.89%);
+  font-size: 20px;
+  margin: 0px 10px;
+}
+
+.action_button:hover {
+  background: linear-gradient(138.62deg, #3bf1ae -109.8%, #1b6be5 64.89%);
+  box-shadow: 0px 3px 40px rgb(177 177 177 / 19%);
+}
+
+@media (min-width: 768px) {
+  .navbar-expand-md .navbar-collapse {
+    border: 0 !important;
+  }
+
+  .container-fluid {
+    flex-direction: row-reverse;
+  }
+}
+
+/* \///////// Login css */
+
+.checkbox:checked {
+  background-color: #00bfac;
+  border-color: #00bfac;
+}
+
+/* \///////// Login css */
+
+/* \///////// global css */
+
+a {
+  color: #1088d3 !important;
+}
+
+.password-input {
+  background-image: none !important;
+}
+
+.caret-transparent {
+  caret-color: transparent;
+}
+
+.active_color {
+  color: #084f8f;
+  font-size: 14px;
+}
+
+.inactive_color {
+  font-size: 14px;
+  color: #7c7c7c;
+}
+
+.bussion_type_check_active {
+  box-shadow: none;
+  background: radial-gradient(closest-side,
+      #0016ff,
+      #004eff,
+      #ffffff) !important;
+}
+
+.bussion_type_check {
+  box-shadow: none;
+}
+
+.active_check_icon {
+  color: rgb(33, 206, 182);
+  width: 21px;
+  height: 21px;
+  background: #ffff;
+  border-radius: 50%;
+}
+
+.drag_active {
+  background: #e0e9f8 !important;
+  border: 1px solid #528ff1 !important;
+}
+
+.react-datepicker__header {
+  background: linear-gradient(138.62deg,
+      #3bf1ae -109.8%,
+      #1b6be5 64.89%) !important;
+}
+
+.react-datepicker__day-names>div {
+  color: #fff;
+}
+
+.cal_menu {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.cal_menu>button {
+  color: beige;
+  background: #00ffff30;
+}
+
+.cal_menu>select {
+  background: #00ffff30;
+}
+
+.react-datepicker__triangle {
+  display: none !important;
+}
+
+/* \///////// global css */
+
+@media (max-width: 512px) {
+  div {
+    font-size: 16px !important;
+    /* line-height: 14px !important; */
+  }
+
+  a {
+    font-size: 16px !important;
+    line-height: 14px !important;
+  }
+
+  p {
+    font-size: 16px !important;
+    /* line-height: 14px !important; */
+  }
+
+  b {
+    font-size: 16px !important;
+    line-height: 14px !important;
+  }
+
+  button {
+    font-size: 16px !important;
+    line-height: 14px !important;
+  }
+}
+
+/* ////////// header //////////// */
+.fullW-d100._inInput_fx.form-floating {
+  flex: 0 0 100%;
+}
+
+.fileAdd_bx p.invalid-feedback {
+  color: #dc3545 !important;
+  font-size: 14px;
+  opacity: 1;
+}
+
+/*////////////Dashboard ///////////////*/
+.dash_containerDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash_containSubDiv {
+  display: flex;
+  background: #fbfcff;
+  border: 1px solid #e3ecfa;
+  border-radius: 5px;
+  padding: 1em 2em;
+  min-height: 126px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dash_contentDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash_statusDiv {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dash_statusDiv h4 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  margin-bottom: 0;
+  color: #0e0b14;
+}
+
+.dash_statusPara {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #0e0b14;
+  opacity: 0.8;
+}
+
+.dash_pendingDiv {
+  background: #fff4f4;
+  border: 1px solid #cf7878;
+  border-radius: 4px;
+  padding: 0 1.1em;
+  text-align: center;
+}
+
+.dash_pendingDiv.success {
+  background: #f1fffe;
+  border: 1px solid #78c0cf;
+}
+
+.dash_pendingDiv span {
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+  color: #c23838;
+}
+
+.dash_pendingDiv span.success {
+  color: #209289;
+}
+
+.dash_blankDiv {
+  background: #fbfcff;
+  border: 1px solid #e3ecfa;
+  border-radius: 5px;
+  flex: 0 0 calc(50% - 19px);
+  min-height: 126px;
+}
+
+._adminName {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  color: #0e0b14;
+  margin-bottom: 1em;
+}
+
+._kycProg_barAdd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 38px;
+  margin-top: 38px;
+}
+
+.dash_alertDiv {
+  background: #fff4f4;
+  border: 1px solid #cf7878;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.dash_alertDiv p {
+  margin: 0;
+  font-size: 12px;
+  color: #922020;
+  padding: 11px 14px;
+}
+
+.dash_success_alertDiv {
+  background: #f1fffe;
+  border: 1px solid #78c0cf;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.dash_success_alertDiv p {
+  margin: 0;
+  font-size: 12px;
+  color: #209289;
+  padding: 11px 14px;
+}
+
+
+/*////////////Dashboard ///////////////*/
+
+/* Responsive css */
+
+@media (max-width: 479px) {
+  .dash_statusDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+
+  .dash_statusPara p {
+    margin: 0;
+  }
+
+  .dash_containSubDiv {
+    gap: 1em;
+  }
+
+  .dash_blankDiv {
+    flex-basis: calc(100% - 0px);
+  }
+
+  ._kycProg_barAdd {
+    gap: 25px;
+    margin-top: 25px;
+  }
+
+  section._welCome_fincoBox {
+    padding-top: 6.5em;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .dash_statusDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+
+  .dash_statusPara p {
+    margin: 0;
+  }
+
+  .dash_containSubDiv {
+    gap: 1em;
+  }
+
+  .dash_blankDiv {
+    flex-basis: calc(100% - 0px);
+  }
+
+  ._kycProg_barAdd {
+    gap: 25px;
+    margin-top: 25px;
+  }
+
+  section._welCome_fincoBox {
+    padding-top: 6.5em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .dash_containSubDiv {
+    gap: 1em;
+  }
+
+  .dash_statusPara p {
+    margin: 0;
+  }
+}
+
+.loader_cls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 7px;
+  margin-right: 25px;
+}
+
+.loader_kycBtn {
+  margin-left: 8px;
+  width: 20px !important;
+  height: 20px !important;
+}
