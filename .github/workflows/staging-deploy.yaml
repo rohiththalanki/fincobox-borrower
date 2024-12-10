@@ -36,4 +36,4 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: |
-          aws s3 sync ./dist/standalone/ s3://${{ secrets.AWS_STORAGE_BUCKET_NAME }} --delete
+          aws s3 sync ./dist s3://${{ secrets.AWS_STORAGE_BUCKET_NAME }} --delete
