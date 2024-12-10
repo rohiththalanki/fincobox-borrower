@@ -7,7 +7,7 @@ import {
   ModalFooter,
   Input,
 } from "reactstrap";
-import { ChangePassword } from "../../Pages/Auth/ChangePassword";
+import { ChangePassword } from "../../pages/Auth/ChangePassword";
 
 export function ChangePasswordModal(props) {
   const { isOpen, toggleModal } = props;
@@ -18,7 +18,7 @@ export function ChangePasswordModal(props) {
         Change Password
       </ModalHeader>
       <ModalBody>
-        <ChangePassword toggle={() => toggleModal(false)}/>
+        <ChangePassword toggle={() => toggleModal(false)} />
       </ModalBody>
     </Modal>
   );
