@@ -93,7 +93,7 @@ export const kycCTabMenu = [
     value: "Individual",
     submenu: [
       {
-        label: "General Information",
+        label: "Personal Information",
         value: "gnl_info",
         id: 1,
         filed: [
@@ -105,7 +105,7 @@ export const kycCTabMenu = [
         ],
       },
       {
-        label: "Address",
+        label: "Residential Address",
         value: "addrs",
         id: 2,
         filed: ["address", "city", "po_box", "address_proof"],
@@ -146,6 +146,9 @@ export const kycCTabMenu = [
           "tin_number",
           "business_document",
           "business_type",
+          "business_city",
+          "business_po_box",
+          "business_address",
         ],
       },
     ],

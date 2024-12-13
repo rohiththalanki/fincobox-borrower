@@ -8,7 +8,7 @@ const configList = {
   },
   staging: {
     CURRENT_ENV: env,
-    API_BASE_URL: 'https://api.fincobox.com/api'
+    API_BASE_URL: 'http://localhost:8000/api'
   },
   production: {
     CURRENT_ENV: env,

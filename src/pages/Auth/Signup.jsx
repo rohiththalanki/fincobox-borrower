@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
-import { InputField } from "../../components/Common/InputField";
+import { InputField, SelectField } from "../../components/Common";
 import AuthLayout from "./AuthLayout";
 import { signupSchema } from "../../utils/error_schema";
 import { signupRequest } from "../../services";
@@ -17,22 +17,30 @@ import {
 } from "../../utils";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Common/Loader";
+import {
+  industrySectorRequest,
+} from "@/services";
 
 export function Signup() {
   const navigate = useNavigate();
+  const [industrySectorData, setIndustrySectorData] = useState([]);
   const [inputValue, setInputValue] = useState({
+    company_name: "",
+    company_type: null,
+    company_website: "",
     first_name: "",
     last_name: "",
     email: "",
     password: "",
     phone_number: "",
     user_type: "Borrower",
-    business_type: "Individual",
     tnc: false,
   });
   const [inputError, setInputError] = useState({
     first_name: "",
     last_name: "",
+    company_name: "",
+    company_type: "",
     email: "",
     password: "",
     phone_number: "",
@@ -43,12 +51,25 @@ export function Signup() {
   const [toggleEye, setToggleEye] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const getIndustrySector = async () => {
+    const resp = await industrySectorRequest();
+    if (resp?.status) {
+      setIndustrySectorData(resp?.results);
+    }
+  };
+
+  useEffect(() => {
+    getIndustrySector();
+  }, []);
+
+
   const submit = async (e) => {
     e.preventDefault();
     const validationResult = await checkFormError(inputValue, signupSchema);
     if (validationResult === true) {
       setIsLoading(true);
-      const res = await signupRequest(inputValue);
+      const { company_type, company_name, company_website, ...data } = inputValue;
+      const res = await signupRequest({ ...data, company_details: { company_name, company_type, company_website } });
       if (res?.success) {
         navigate(
           "/verification/" + res?.results?.id + "?" + queryString(res?.results)
@@ -63,6 +84,7 @@ export function Signup() {
   };
 
   const onInputChange = async (name, value) => {
+    console.log('name', name, value);
     const stateObj = { ...inputValue, [name]: value };
     setInputValue(stateObj);
     if (isObjectValueEmpty(inputError)) {
@@ -77,60 +99,71 @@ export function Signup() {
         <div className="text-2xl mb-8">
           We need a few details to enable your business growth
         </div>
-        <div>
-          <FormGroup>
-            <p>Business Type</p>
-            <FormGroup className="d-flex ">
-              <FormGroup check>
-                <Input
-                  className={
-                    (inputValue.business_type === "Individual"
-                      ? "bussion_type_check_active "
-                      : "") + "bussion_type_check pointer"
-                  }
-                  id="Individual"
-                  name="radio1"
-                  type="radio"
-                  value={inputValue.business_type}
-                  checked={inputValue.business_type === "Individual"}
-                  onChange={() => onInputChange("business_type", "Individual")}
-                />
-                <Label
-                  for="Individual"
-                  className="pointer"
-                  style={{ fontWeight: "400", marginRight: "50px" }}
-                  check
-                >
-                  Individual
-                </Label>
-              </FormGroup>
 
-              <FormGroup check>
-                <Input
-                  className={
-                    (inputValue.business_type === "Business"
-                      ? "bussion_type_check_active "
-                      : "") + "bussion_type_check pointer"
-                  }
-                  id="Business"
-                  name="radio1"
-                  type="radio"
-                  value={inputValue.business_type}
-                  onChange={() => onInputChange("business_type", "Business")}
-                />
-                <Label
-                  for="Business"
-                  className="pointer"
-                  style={{ fontWeight: "400" }}
-                  check
-                >
-                  Business
-                </Label>
-              </FormGroup>
-            </FormGroup>
-          </FormGroup>
+        <div className="mb-4">
+          <FloatingField
+            controlId="floatingInput"
+            label="Company Name"
+            labelClass="_inInput_fx _inInput_signFx"
+            type="text"
+            id="company_name"
+            placeholder="Company Name"
+            name="company_name"
+            maxLength={100}
+            defaultValue
+            onChange={({ target: { name, value } }) =>
+              onInputChange(name, value)
+            }
+            focus={!!inputError.company_name}
+            error={inputError.company_name}
+            value={inputValue.company_name}
+          />
         </div>
-
+        <div className="mb-4 flex-1 _inFr_flexBx anvBas_select" style={{ display: "block" }}>
+          <SelectField
+            boxClass="basic-single"
+            classNamePrefix="select"
+            placeholder="Company Type"
+            labelClass="_inInput_fx _inInput_signFx"
+            valueText="id"
+            labelText="name"
+            options={industrySectorData}
+            name="company_type"
+            error={
+              inputError?.company_type
+                ? inputError?.company_type
+                : inputError?.["company_type.value"]
+            }
+            focus={
+              !!inputError?.["company_type.value"] ||
+              !!inputError?.company_type
+            }
+            selectedOption={inputValue.company_type}
+            setSelectedOption={(value) =>
+              onInputChange("company_type", value)
+            }
+          />
+        </div>
+        <div className="mb-4">
+          <FloatingField
+            controlId="floatingInput"
+            label="Company Website"
+            labelClass="_inInput_fx _inInput_signFx"
+            type="text"
+            id="company_website"
+            placeholder="Company Website"
+            prefix="https://"
+            name="company_website"
+            maxLength={100}
+            defaultValue
+            onChange={({ target: { name, value } }) =>
+              onInputChange(name, value)
+            }
+            focus={!!inputError.company_website}
+            error={inputError.company_website}
+            value={inputValue.company_website}
+          />
+        </div>
         <div className="mb-4 d-flex justify-content-between">
           <FloatingField
             controlId="floatingInput"

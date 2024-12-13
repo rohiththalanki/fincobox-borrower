@@ -43,6 +43,7 @@ import Loader from "../../Common/Loader";
 import { custom_context } from "../../../utils/custom_context";
 
 export function KYCModal(props) {
+  const data = getStorage("logged-in")?.result;
   const { show, setShow } = props;
   const initialValue = {
     first_name: "",
@@ -69,6 +70,9 @@ export function KYCModal(props) {
     sme_segment: null,
     industry_sector: null,
     tin_number: "",
+    company_address: "",
+    company_city: "",
+    company_po_box: "",
     business_document: "",
     business_type: "",
   };
@@ -91,7 +95,7 @@ export function KYCModal(props) {
   const [kycDetails, setKycDetails] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [inputError, setInputError] = useState("");
-
+  const [errorsList, setErrorsList] = useState([]);
   const [activeStep, setActiveStep] = useState("gnl_info");
   const [verifiedStep, setVerifiedStep] = useState(menuList);
   const [cityData, setCityData] = useState([]);
@@ -99,7 +103,7 @@ export function KYCModal(props) {
   const [nationalityData, setNationalityData] = useState([]);
   const [industrySectorData, setIndustrySectorData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const data = getStorage("logged-in")?.result;
+
 
   useEffect(() => {
     getKycDetails(data?.business_type);
@@ -156,7 +160,7 @@ export function KYCModal(props) {
               value: industrySectorLabel?.id,
               label: industrySectorLabel?.name,
             }
-            : null,
+            : inputValue.industry_sector,
           business_segment: kycDetails?.business_segment
             ? {
               value: kycDetails?.business_segment,
@@ -208,9 +212,12 @@ export function KYCModal(props) {
       email: data?.email,
       business_type: data?.business_type,
       phone_number: data?.phone_number,
+      industry_sector: data?.company_details?.company_type,
+      business_name: data?.company_details?.company_name
     }));
   };
 
+  console.log('dsa', inputValue, data?.company_details?.company_type);
   const getKycDetails = async (data) => {
     const resp = await getKycData(data);
     if (resp?.status) {
@@ -268,6 +275,7 @@ export function KYCModal(props) {
         occupation: inputValue?.occupation?.value,
         nationality: inputValue?.nationality?.value,
         city: inputValue?.city?.value,
+        company_city: inputValue?.company_city?.value,
         company_type: inputValue?.company_type?.value,
         industry_sector: inputValue?.industry_sector?.value,
         sme_segment: inputValue?.sme_segment?.value,
@@ -295,14 +303,6 @@ export function KYCModal(props) {
       delete payload.modified;
       delete payload.get_completion_percentage;
 
-      if (inputValue?.business_type === "Individual") {
-        delete payload.company_type;
-        delete payload.industry_sector;
-        delete payload.sme_segment;
-        delete payload.business_segment;
-        delete payload.business_name;
-        delete payload.business_document;
-      }
       const fromData = new FormData();
       for (const key in payload) {
         if (
@@ -344,10 +344,11 @@ export function KYCModal(props) {
           }
         }
       }
-      setInputError({
+      let errors = {
         resError: { ...inputError?.resError, ...nestErrorObj },
         ...validationResult,
-      });
+      }
+      setInputError(errors);
     }
   };
 
@@ -436,6 +437,7 @@ export function KYCModal(props) {
     setIsLoading(false);
   };
   const handleOnChange = async (name, value) => {
+    console.log(';inot', inputValue);
     let stateObj = { ...inputValue, [name]: value };
     setInputValue((s) => {
       stateObj = { ...s, [name]: value };
@@ -465,21 +467,6 @@ export function KYCModal(props) {
     }
   };
 
-  const showResponseError = () => {
-    const resError = inputError?.resError;
-    let error = [];
-    for (const key in resError) {
-      if (Object.hasOwnProperty.call(resError, key)) {
-        error.push(
-          <p className="m-0">
-            <b>{key} : </b> {resError[key]}
-          </p>
-        );
-      }
-    }
-    return error;
-  };
-
   return (
     <Modal
       className={"anvKyc_tpModal " + (showSuccessModal ? "success_modal" : "")}
@@ -500,47 +487,40 @@ export function KYCModal(props) {
         <Tab.Container id="left-tabs-example" defaultActiveKey="gnl_info">
           <div className="kycProc_sdBar">
             <Nav variant="pills" className="flex-column">
-              {kycCTabMenu
-                .filter((item) =>
-                  inputValue?.business_type === "Business"
-                    ? item
-                    : inputValue?.business_type === "Individual" &&
-                    inputValue?.business_type === item?.value
-                )
-                .map((menu, ind) => (
-                  <React.Fragment key={menu?.label + ind}>
-                    <div className="kycProc_TabHd">
-                      <span>{menu?.label}</span>
-                    </div>
-                    {menu?.submenu.map((submenu, key) => (
-                      <Nav.Item key={submenu?.label + key}>
-                        <Nav.Link
-                          type="submit"
-                          onClick={() => submit(submenu?.value)}
-                          className={
-                            (submenu?.value === activeStep ? "active " : "") +
-                            "d-flex justify-content-between"
-                          }
-                        >
-                          {submenu?.label}
-                          {verifiedStep.some(
-                            (item) =>
-                              item?.status === true &&
-                              item?.value === submenu?.value
-                          ) &&
-                            submenu?.value !== activeStep && (
-                              <span>
-                                <FaCheckCircle
-                                  className="active_check_icon"
-                                  color="#21CEB6"
-                                />
-                              </span>
-                            )}
-                        </Nav.Link>
-                      </Nav.Item>
-                    ))}
-                  </React.Fragment>
-                ))}
+              {kycCTabMenu.map((menu, ind) => (
+                <React.Fragment key={menu?.label + ind}>
+                  <div className="kycProc_TabHd">
+                    <span>{menu?.label}</span>
+                  </div>
+                  {menu?.submenu.map((submenu, key) => (
+                    <Nav.Item key={submenu?.label + key}>
+                      <Nav.Link
+                        type="submit"
+                        onClick={() => submit(submenu?.value)}
+                        className={
+                          (submenu?.value === activeStep ? "active " : "") +
+                          "d-flex justify-content-between"
+                        }
+                      >
+                        {submenu?.label}
+                        {verifiedStep.some(
+                          (item) =>
+                            item?.status === true &&
+                            item?.value === submenu?.value
+                        ) &&
+                          submenu?.value !== activeStep && (
+                            <span>
+                              <FaCheckCircle
+                                className="active_check_icon"
+                                color="#21CEB6"
+                              />
+                            </span>
+                          )}
+                      </Nav.Link>
+                    </Nav.Item>
+                  ))}
+                </React.Fragment>
+              ))}
             </Nav>
           </div>
 
@@ -550,7 +530,7 @@ export function KYCModal(props) {
                 <Tab.Pane active={activeStep === "gnl_info"}>
                   <div className="_innerKyc_grid">
                     <div className="_inKycHead">
-                      <h1>General Information</h1>
+                      <h1>Personal Information</h1>
                       <p>
                         We need a few more details about you and your business
                       </p>
@@ -591,69 +571,7 @@ export function KYCModal(props) {
                       />
                     </div>
 
-                    <div className="businesType_bx">
-                      <div className="bsy_head">
-                        <h6>Business Type</h6>
-                      </div>
-
-                      <div className="businesType_otr">
-                        <div
-                          className={
-                            (inputValue?.business_type === "Individual"
-                              ? "active "
-                              : "") + " innrBsy_type"
-                          }
-                          onClick={() =>
-                            setInputValue((s) => ({
-                              ...s,
-                              business_type: "Individual",
-                            }))
-                          }
-                        >
-                          {/* <div className="bsy_circle">
-                            <span></span>
-                          </div> */}
-                          <div className="bsy_para">Individual</div>
-                        </div>
-
-                        <div
-                          className={
-                            (inputValue?.business_type === "Business"
-                              ? "active "
-                              : "") + " innrBsy_type"
-                          }
-                          onClick={() =>
-                            setInputValue((s) => ({
-                              ...s,
-                              business_type: "Business",
-                            }))
-                          }
-                        >
-                          {/* <div className="bsy_circle">
-                            <span></span>
-                          </div> */}
-                          <div className="bsy_para">Business</div>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className="_inFr_flexBx">
-                      <FloatingField
-                        controlId="floatingInput"
-                        label="Email ID"
-                        labelClass=""
-                        type="text"
-                        placeholder="Email ID"
-                        name="email"
-                        onChange={({ target: { name, value } }) =>
-                          handleOnChange(name, value)
-                        }
-                        disabled
-                        focus={!!inputError?.email}
-                        error={inputError?.email}
-                        value={inputValue.email}
-                      />
-
                       <div className="_inInput_fx _inDual_flex">
                         <InputField
                           inpId="anv_inpCont_si"
@@ -687,6 +605,22 @@ export function KYCModal(props) {
                           value={inputValue.phone_number}
                         />
                       </div>
+
+                      <FloatingField
+                        controlId="floatingInput"
+                        label="Email ID"
+                        labelClass=""
+                        type="text"
+                        placeholder="Email ID"
+                        name="email"
+                        onChange={({ target: { name, value } }) =>
+                          handleOnChange(name, value)
+                        }
+                        disabled
+                        focus={!!inputError?.email}
+                        error={inputError?.email}
+                        value={inputValue.email}
+                      />
                     </div>
 
                     <div className="_inFr_flexBx anvBas_select">
@@ -741,7 +675,7 @@ export function KYCModal(props) {
                 <Tab.Pane active={activeStep === "addrs"}>
                   <div className="_innerKyc_grid">
                     <div className="_inKycHead">
-                      <h1>Address Details</h1>
+                      <h1>Address and Proof of Residence</h1>
                       <p>
                         We need a few more details about you and your business
                       </p>
@@ -826,8 +760,7 @@ export function KYCModal(props) {
                           />
                         </div>
                         <span className="fil_addBottom_para">
-                          Ejari, Utility bill or bank statement from last 3
-                          months
+                          (Utility Bill, Bank Statement, Ejari, rental agreement etc)
                         </span>
 
                         {!!inputError?.address_proof && (
@@ -1243,50 +1176,10 @@ export function KYCModal(props) {
                           handleOnChange("industry_sector", value)
                         }
                       />
-                    </div>
 
-                    <div className="_inFr_flexBx">
-                      <div
-                        className="_inInput_fx fulWid _upLine_head"
-                        style={{ flex: "0 0 100%" }}
-                      >
-                        <p>
-                          Trade License or Certificate of incorporation /
-                          Partnership deed *
-                        </p>
-                      </div>
-
-                      <div className="fileAdd_bx">
-                        <div
-                          className={
-                            (inputError?.business_document ? "error " : "") +
-                            "_attachBx"
-                          }
-                        >
-                          <DropzoneField
-                            title="Business Document"
-                            htmlFor="attach_6"
-                            value={
-                              !!inputValue.business_document &&
-                              typeof inputValue.business_document === "string"
-                            }
-                            handleOnChange={(value) =>
-                              handleOnChange("business_document", value)
-                            }
-                          />
-                        </div>
-                        {!!inputError?.business_document && (
-                          <p className="invalid-feedback">
-                            {inputError?.business_document}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="_inFr_flexBx">
                       <FloatingField
                         controlId="floatingInput"
-                        label="Enter TIN Details"
+                        label="Enter TIN Details (UAE equivalent) *"
                         labelClass="_inInput_fx"
                         type="text"
                         placeholder="Enter TIN Details"
@@ -1298,11 +1191,100 @@ export function KYCModal(props) {
                         error={inputError?.tin_number}
                         value={inputValue.tin_number}
                       />
-                      <div
-                        className="_inInput_fx fulWid _upLine_head"
-                        style={{ flex: "0 0 100%" }}
-                      >
-                        <p className="mt-2">TIN (need UAE equivalent) *</p>
+                    </div>
+
+                    <div className="_inKycHead">
+                      <h1>Office Address</h1>
+                    </div>
+
+                    <div className="_inFr_flexBx">
+                      <FloatingField
+                        className="w-100 "
+                        controlId="floatingInput"
+                        label="Address *"
+                        labelClass="_inInput_fx w-100 fullW-d100"
+                        as="textarea"
+                        placeholder="Address"
+                        name="company_address"
+                        onChange={({ target: { name, value } }) =>
+                          handleOnChange(name, value)
+                        }
+                        focus={!!inputError?.company_address}
+                        error={inputError?.company_address}
+                        value={inputValue.company_address}
+                      />
+                    </div>
+
+                    <div className="_inFr_flexBx anvBas_select">
+                      <SelectField
+                        boxClass="basic-single"
+                        classNamePrefix="select"
+                        placeholder="City"
+                        valueText="id"
+                        labelText="name"
+                        options={cityData}
+                        name="company_city"
+                        error={
+                          inputError?.city
+                            ? inputError?.city
+                            : inputError?.["company_city.value"]
+                        }
+                        focus={
+                          !!inputError?.["company_city.value"] || !!inputError?.city
+                        }
+                        selectedOption={inputValue.company_city}
+                        setSelectedOption={(value) =>
+                          handleOnChange("company_city", value)
+                        }
+                      />
+
+                      <FloatingField
+                        controlId="floatingInput"
+                        label="Enter your PO BOX"
+                        labelClass="_inInput_fx"
+                        type="text"
+                        placeholder="Enter your PO BOX"
+                        name="company_po_box"
+                        onChange={({ target: { name, value } }) =>
+                          handleOnChange(name, value)
+                        }
+                        focus={!!inputError?.company_po_box}
+                        error={inputError?.company_po_box}
+                        value={inputValue.company_po_box}
+                      />
+                    </div>
+
+                    <div className="_inFr_flexBx">
+                      <div className="fileAdd_bx">
+                        <p>Proof of Office Address in UAE*</p>
+                        <div
+                          className={
+                            (inputError?.business_document ? "error " : "") +
+                            "_attachBx"
+                          }
+                        >
+                          <DropzoneField
+                            title="Address proof"
+                            htmlFor="attach_6"
+                            value={
+                              !!inputValue.business_document &&
+                              typeof inputValue.business_document === "string"
+                            }
+                            handleOnChange={(value) =>
+                              handleOnChange("business_document", value)
+                            }
+                          />
+                        </div>
+                        <span className="fil_addBottom_para">
+                          ( Upload Trade License / Commercial License
+                          MOA/Certificate of Incorporation / Partnership Deed)
+                        </span>
+
+                        {!!inputError?.business_document && (
+                          <p className="invalid-feedback">
+                            {inputError?.business_document}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1311,11 +1293,18 @@ export function KYCModal(props) {
             </div>
             <Modal.Footer>
               <div className={inputError?.resError && "anvFlex-root"}>
-                {inputError?.resError && (
-                  <p className="invalid-feedback">
-                    {showResponseError().map((item) => item)}
-                  </p>
-                )}
+                {
+                  inputError?.resError && (
+                    <div>
+                      {Object.keys(inputError.resError).map((key) => (
+                        <p className="m-0 invalid-feedback" key={key}>
+                          <b>{key} :</b> {inputError.resError[key]}
+                        </p>
+                      ))}
+                    </div>
+                  )
+                }
+                {/* <div>{inputError?.resError && responseErrors.map((item) => <p className="invalid-feedback">{item}</p>)}</div> */}
                 <Button
                   variant="primary"
                   className="anvSv_btn"

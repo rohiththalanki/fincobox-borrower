@@ -79,7 +79,7 @@ export const industrySectorRequest = (data = {}) => {
     methodType.GET,
     apiEndPoints.authIndustrySector,
     data,
-    true
+    false
   )
     .then((response) => {
       return response;
