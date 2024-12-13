@@ -69,7 +69,7 @@ export function Signup() {
     if (validationResult === true) {
       setIsLoading(true);
       const { company_type, company_name, company_website, ...data } = inputValue;
-      const res = await signupRequest({ ...data, company_details: { company_name, company_type, company_website } });
+      const res = await signupRequest({ ...data, company_details: { company_name, company_type, company_website }, business_type: "Business" });
       if (res?.success) {
         navigate(
           "/verification/" + res?.results?.id + "?" + queryString(res?.results)
